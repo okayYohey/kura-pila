@@ -40,11 +40,11 @@ export default {
   /*
   ** Nuxt.js modules
   */
-  // modules: [
+  modules: [
   //   ['wp-nuxt', {
   //     endpoint: 'https://{対象のサイトのドメイン}/wp-json'
   //   }],
-  // ],
+  ],
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
