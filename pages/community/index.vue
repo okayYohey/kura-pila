@@ -85,7 +85,7 @@ export default {
             this.currentUser = true;
             this.userID = firebase.auth().currentUser.email;
             // this.userName
-            console.log('userID:'+this.userID)
+            alert('userID:'+this.userID+'is logged in')
         }
         
     },
@@ -122,7 +122,6 @@ export default {
     },
     methods:{
         onPost(){
-            console.log('onPost')
             if(firebase.auth().currentUser){
                 firebase.collection("posts").doc(this.userID).set({
                     userID: userID,
@@ -130,15 +129,15 @@ export default {
                     postContent: postContent
                 })
                 .then(function() {
-                    console.log("Document successfully written!" + userID + ':' +userName);
+                    alert("Document successfully written!" + userID + ':' +userName);
                     this.$router.push('/')
                 })
                 .catch(function(error) {
-                    console.error("Error writing document: ", error);
+                    alert("Error writing document: ", error);
                 });
             }else{
                 this.openLogin = true;
-                console.log('you re not logged in')
+                alert('you re not logged in')
             }
         }
     }

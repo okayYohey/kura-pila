@@ -53,8 +53,8 @@ export default {
             var errorCode = error.code;
             var errorMessage = error.message;
             alert(errorMessage)
-            console.log(errorCode+errorMessage)
-            console.log('log in!!')
+            alert(errorCode+errorMessage)
+            
 
             // ...
             });

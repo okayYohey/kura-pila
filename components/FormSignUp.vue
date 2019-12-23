@@ -59,7 +59,6 @@ export default {
             firebase.auth().createUserWithEmailAndPassword(this.email, this.pass).catch(function(error) {
               var errorMessage =error.message
               alert(errorMessage)
-              console.log('created!')
               if (firebase.auth().createUser) {
                 this.$router.go({ path: this.currentRoutePath });
                 alert('you succeeded')

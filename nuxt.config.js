@@ -41,6 +41,9 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    ['wp-nuxt', {
+      endpoint: 'https://{対象のサイトのドメイン}/wp-json'
+    }],
   ],
   /*
   ** vuetify module configuration
@@ -64,6 +67,9 @@ export default {
         }
       }
     }
+  },
+  generate: {
+    fallback: true
   },
   /*
   ** Build configuration
