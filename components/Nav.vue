@@ -6,7 +6,7 @@
       color="primary"
       dark
     >
-        <v-toolbar-title class="font-weight-bold display-1" v-text="title"/>
+        <v-toolbar-title class="font-weight-bold title" v-text="title"/>
         <v-spacer></v-spacer>
         <v-btn class="mx-1" to="/studios/" color="secondary">スタジオ</v-btn>
         <v-btn class="mx-1" to="/blogs/" color="secondary">ブログ</v-btn>
@@ -23,7 +23,7 @@ export default {
       drawer: false,
       fixed: true,
       extended: true,
-      title: 'くらぴら',
+      title: 'みんなのピラティス',
       }
     },
 }

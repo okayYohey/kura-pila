@@ -10,7 +10,7 @@
             justify="center"
             >
                 <v-col class="text-center" cols="12">
-                    <h2 class="flex display-1 font-weight-bold">あなたのくらしにピラティスを</h2>
+                    <h2 class="flex display-1 font-weight-bold">ピラティスであなたの明日が輝きだす</h2>
                 </v-col>
             </v-row>
         </v-parallax>

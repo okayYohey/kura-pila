@@ -1,26 +1,26 @@
 <template>
   <v-card
     class="mx-auto"
-    color="#26c6da"
+    color="white"
     max-width="800"
+    max-height="200"
   >
-    <v-card-title>
+    <v-card-title class="pt-2">
       <v-icon
-        large
         left
       >
         mdi-twitter
       </v-icon>
-      <span class="title font-weight-light">{{ platform }}</span>
+      <span class="font-weight-light">{{ platform }}</span>
     </v-card-title>
 
-    <v-card-text class="headline font-weight-bold">
+    <v-card-text class="headline font-weight-bold py-2">
       {{ postContent }}
     </v-card-text>
 
-    <v-card-actions>
-      <v-list-item class="grow">
-        <v-list-item-avatar color="grey">
+    <v-card-actions class="py-0">
+      <v-list-item>
+        <v-list-item-avatar>
           <v-img
             class="elevation-6"
             :src=iconImg

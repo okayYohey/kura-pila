@@ -21,10 +21,13 @@
     <v-card-actions class="action">
       <v-btn
         color="primary"
+        to="/details"
       >
         詳細を見てみる
       </v-btn>
+      <v-btn color="accent">初回1000円クーポンプレゼント！</v-btn>
     </v-card-actions>
+    
     </div>
   </v-card>
 </template>

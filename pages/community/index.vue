@@ -1,35 +1,108 @@
 <template>
     <div class="community-page">
+
         <main-title :title="childTitle"></main-title>
+        <v-container>
+            <v-row>
+                <v-btn class="mx-2" color="secondary" @click="openSignup=true; openLogin=false;" v-show="!currentUser && !openSignup" >会員登録する</v-btn>
+                <v-btn class="mx-2" color="accent" @click="openLogin=true; openSignup=false;" v-show="!currentUser && !openLogin">ログインする</v-btn>
+                <v-btn class="mx-2" @click="openPost" v-show="currentUser">投稿する</v-btn>
+                <v-btn>{{ userName }}</v-btn>
+                <v-btn>{{ userID }}</v-btn>
+            </v-row>
+        </v-container>
+        <post-func></post-func>
+        <form-signup v-show="openSignup"></form-signup>
+        <form-login v-show="openLogin"></form-login>
+        <form-post @onPostPushed="onPost" v-show="openPost"></form-post>
         <div class="card-list pa-7">
-            <card-posted
-                v-for="communityCard in communityCards" 
-                v-bind:key="communityCard.id"
-                :iconImg = communityCard.whoImg
-                :postUser = communityCard.who
-                :platform = communityCard.where
-                :postContent = communityCard.what
-                :likes = communityCard.likes
-                class="mb-6"
-            >
+        <card-posted
+        v-for="communityCard in communityCards" 
+        v-bind:key="communityCard.id"
+        :iconImg = communityCard.whoImg
+        :postUser = communityCard.who
+        :platform = communityCard.where
+        :postContent = communityCard.what
+        :likes = communityCard.likes
+        class="mb-6"
+        >
         </card-posted>
+        <v-btn @click="openPost=!openPost" class="px-3 py-auto mb-12 mr-12" bottom right v-show="!openPost" fixed color="primary"><v-icon color="#fff">mdi-plus</v-icon></v-btn>
+        <v-btn @click="openPost=!openPost" class="px-3 py-auto mb-12 mr-12" bottom right v-show="openPost" fixed color="primary"><v-icon color="#fff">mdi-minus</v-icon></v-btn>
         </div>
+        <!-- <v-container >
+            <v-col class="mx-auto col-12 col-ms-8 col-md-8">
+                <v-timeline
+                id="stockohei"
+                source-type="profile"
+                :options="{ tweetLimit: '2' }"
+                >
+                </v-timeline>
+            </v-col>
+        </v-container> -->
+        <!-- <vue-instagram
+        token="EAAZANxNfHcVQBAIc5wqot10908YnNGABGbhkkIvFbdYEScr4ZAsybjAZBjs2yOEoQ8UI9w2jZC7gWZCNsxt3HEc4kDECKGOqe25n0gDLEEwO7giwZC0cPUIikVpxVRcpcExyAplets7AgZCM17vCjb5Jz53MXnNsz6EcgFyRRTp9MkEjtZCyB9Xj"
+        :count="5" :tags="['cr7']" mediaType="image"
+        >
+            <template slot="feeds" slot-scope="props">
+            <li class="fancy-list"> {{ props.feed.link }} </li>
+            </template>
+            <template slot="error" slot-scope="props">
+            <div class="fancy-alert"> {{ props.error.error_message }} </div>
+            </template>
+        </vue-instagram> -->
+        
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
+// import VueInstagram from 'vue-instagram'
+// Vue.use(VueInstagram)
+import { Tweet, Timeline } from 'vue-tweet-embed'
 import CardPosted from '~/components/CardPosted.vue'
+import formSignUp from '~/components/FormSignUp.vue'
+import formLogin from '~/components/FormLogin.vue'
+import PostFunc from '~/components/PostFunc.vue'
+import MainTitle from '~/components/PostFunc.vue'
+import firebase from '~/components/firebaseInit'
+import FormPost from '~/components/FormPost.vue'
 
 export default {
     components:{
-        'card-posted': CardPosted
+        'card-posted': CardPosted,
+        // 'vue-instagram': VueInstagram,
+        'v-tweet': Tweet,
+        'v-timeline': Timeline,
+        'form-signup': formSignUp,
+        'post-func': PostFunc,
+        'main-title': MainTitle,
+        'form-login': formLogin,
+        'form-post': FormPost
     },
-    props:[
+    created(){
+        if (firebase.auth().currentUser) {
+            this.currentUser = true;
+            this.userID = firebase.auth().currentUser.email;
+            // this.userName
+            console.log('userID:'+this.userID)
+        }
         
-    ],
+    },
     data(){
         return{
             childTitle:　'コミュニティ',
+            twitterID: 'stockohei',
+            makeAccount:false,
+            currentUser: false,
+            openSignup: false,
+            openLogin:false,
+            openPost:false,
+            // postの格納する内容
+            userID:'',
+            userName: '',
+            postContent:'',
+
             communityCards:[
                 {
                     'who': 'User Name',
@@ -45,6 +118,28 @@ export default {
                     // ]
                 },
             ]
+        }
+    },
+    methods:{
+        onPost(){
+            console.log('onPost')
+            if(firebase.auth().currentUser){
+                firebase.collection("posts").doc(this.userID).set({
+                    userID: userID,
+                    userName: userName,
+                    postContent: postContent
+                })
+                .then(function() {
+                    console.log("Document successfully written!" + userID + ':' +userName);
+                    this.$router.push('/')
+                })
+                .catch(function(error) {
+                    console.error("Error writing document: ", error);
+                });
+            }else{
+                this.openLogin = true;
+                console.log('you re not logged in')
+            }
         }
     }
 }
